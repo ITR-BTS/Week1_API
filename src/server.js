@@ -1,49 +1,39 @@
-import grpc from '@grpc/grpc-js'
-import protoLoader from '@grpc/proto-loader'
+import cors from 'cors'
+import 'dotenv/config'
+import express from 'express'
+import { ApolloServer } from 'apollo-server-express'
+import { mergeResolvers } from '@graphql-tools/merge'
 
-import path from 'path'
-import { fileURLToPath } from 'url'
+import connectDB from '~/config/mongodb.js'
+import { typeDefs } from '~/schema.js'
+import physicianResolvers from '~/resolvers/physicianResolver.js'
+import patientResolvers from '~/resolvers/patientResolver.js'
 
-// tái tạo __dirname
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const app = express()
+const resolvers = mergeResolvers([
+  patientResolvers,
+  physicianResolvers
+])
 
-const PROTO_PATH = path.join(__dirname, 'proto', 'patient.proto')
+async function startServer() {
+  await connectDB()
 
-// Load proto
-const packageDef = protoLoader.loadSync(PROTO_PATH, {})
-const patientProto = grpc.loadPackageDefinition(packageDef).patient
+  const server = new ApolloServer({ typeDefs, resolvers })
 
+  await server.start()
+  server.applyMiddleware({ app })
 
-// Mock data
-const patients = {
-  '1': { id: '1', name: 'Duc', age: 25 },
-  '2': { id: '2', name: 'Sang', age: 21 }
-}
-
-function getPatient(call, callback) {
-  const patient = patients[call.request.id]
-
-  if (patient) {
-    callback(null, patient)
-  } else {
-    callback({
-      code: grpc.status.NOT_FOUND,
-      message: 'not found'
-    })
-  }
-}
-
-function main() {
-  const server = new grpc.Server()
-  server.addService(patientProto.PatientService.service, {
-    GetPatient: getPatient
-  })
-
-  server.bindAsync('0.0.0.0:8001', grpc.ServerCredentials.createInsecure(), () => {
-    console.log('Patient service is running on localhost:8001')
-    server.start()
+  app.listen(8080, () => {
+    console.log(`Server running at localhost:8080${server.graphqlPath}`)
   })
 }
 
-main()
+startServer()
+// app.use(
+//   cors(
+//     {
+//       origin: process.env.FRONTEND_URL || 'http://localhost:5173'
+//     }
+//   )
+// )
+
