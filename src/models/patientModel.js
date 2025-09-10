@@ -81,14 +81,6 @@ const patientSchema = new mongoose.Schema({
   addressInfo: {
     type: addressSchema,
     required: [true, 'Address information is required']
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  notes: {
-    type: String,
-    maxlength: [1000, 'Notes cannot exceed 1000 characters']
   }
 }, {
   timestamps: true,

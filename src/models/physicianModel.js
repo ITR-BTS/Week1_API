@@ -42,7 +42,7 @@ const physicianSchema = new mongoose.Schema({
       },
       message: 'Physician must be at least 18 years old'
     }
-  },
+  }
 }, {
   timestamps: true, });
 const physicianModel = mongoose.model('Physician', physicianSchema);
