@@ -28,11 +28,15 @@ const patientResolvers = {
     },
     patientByEmail: async (_, { email }) => {
       return Patient.findOne({ email }).populate('physician')
+    },
+    patientDetails: async (_, { id }) => {
+      const patient = await Patient.findById(id).populate('physician')
+      if (!patient) throw new Error('Patient not found')
+      return patient
     }
   },
   Mutation: {
     createPatient: async (_, { email, phone, gender, dob, physician, addressInfo }) => {
-      // Validate physician exists
       const physicianExists = await Physician.findById(physician)
       if (!physicianExists) throw new Error('Physician not found')
       const patient = new Patient({ email, phone, gender, dob, physician, addressInfo })
