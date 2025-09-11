@@ -1,54 +1,61 @@
-import { gql } from 'apollo-server-express'
+// import { gql } from 'apollo-server-express'
 
-export const typeDefs = gql`
-    enum Gender {
-        Male
-        Female
-    }
+// const typeDefs = gql`
+//   scalar Date
 
-    type Physician {
-        id: ID!
-        email: String
-        title: String
-        phone: String
-        gender: Gender
-        dob: String
-    }
+//   type AddressInfo{
+//     address: String!
+//     city: String!
+//     state: String!
+//     country: String!
+//   }
 
-    type AddressInfo {
-        address: String
-        city: String
-        state: String
-        country: String
-    }
+//   type Physician{
+//     id: ID!
+//     email: String!
+//     title: String!
+//     phone: String!
+//     gender: String!
+//     dob: String!
+//   }
+//   type Patient{
+//     id: ID!
+//     email: String!
+//     phone: String!
+//     gender: String!
+//     dob: String!
+//     physician: Physician!
+//     addressInfo: AddressInfo!
+//   }
+//   type Query {
+//   physicians: [Physician]
+//   physician(id: ID!): Physician
+//   patients: [Patient]
+//   patientByEmail(email: String!): Patient
+// }
 
-    type Patient {
-        id: ID!
-        email: String
-        phone: String
-        gender: Gender
-        dob: String
-        physician: Physician
-        addressInfo: AddressInfo
-    }
+// type Mutation {
+//   createPhysician(email: String!, title: String!, phone: String!, gender: String!, dob: String!): Physician
+//   createPatient(email: String!, phone: String!, gender: String!, dob: String!, physician: ID!, addressInfo: AddressInput!): Patient
+//   updatePatient(id: ID!, input: UpdatePatientInput!): Patient
+//   deletePatient(id: ID!): Boolean
+//   deletePhysician(id: ID!): Boolean
+// }
 
-    type Query {
-        patients(page: Int, limit: Int): [Patient]
-        patient(id: ID!): Patient
-        physicians: [Physician] 
-    }
+// input UpdatePatientInput {
+//   email: String
+//   phone: String
+//   dob: String
+//   physician: ID
+//   addressInfo: AddressInput
+// }
 
-    type Mutation {
-        createPhysician(email: String!, title: String!, phone: String!, gender: Gender!, dob: String!): Physician
-        createPatient(email: String!, phone: String!, gender: Gender!, dob: String!, physician: ID!, addressInfo: AddressInput): Patient
-        updatePatient(id: ID!, email: String, phone: String, gender: Gender, dob: String, physician: ID, addressInfo: AddressInput): Patient
-        deletePatient(id: ID!): Boolean
-    }
+// input AddressInput {
+//   address: String!
+//   city: String!
+//   state: String!
+//   country: String!
+// }
+// `
 
-    input AddressInput {
-        address: String
-        city: String
-        state: String
-        country: String
-    }
-`
+// export { typeDefs }
