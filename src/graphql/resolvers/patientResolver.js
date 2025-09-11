@@ -26,6 +26,9 @@ const patientResolvers = {
         throw new Error('Failed to fetch patients')
       }
     },
+    countPatients: async (_, {}) => {
+      return Patient.countDocuments();
+    },
     patientByEmail: async (_, { email }) => {
       return Patient.findOne({ email }).populate('physician')
     },

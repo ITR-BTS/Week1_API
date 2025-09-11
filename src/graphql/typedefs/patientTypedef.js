@@ -29,6 +29,7 @@ const patientTypeDef = gql`
 }
   type Query {
   patients(page: Int, limit: Int, filter: PatientFilter): PatientList
+  countPatients: Int!
   patientByEmail(email: String!): Patient
   patientDetails(id: ID!): Patient
 }
