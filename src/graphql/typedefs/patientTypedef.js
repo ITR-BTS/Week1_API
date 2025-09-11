@@ -17,10 +17,20 @@ const patientTypeDef = gql`
     dob: String!
     physician: Physician!
     addressInfo: AddressInfo!
-  }
+}
+  input PatientFilter {
+    physicianId: ID
+}
+  type PatientList     {
+    data: [Patient]
+    total: Int
+    page: Int
+    totalPages: Int
+}
   type Query {
-  patients: [Patient]
+  patients(page: Int, limit: Int, filter: PatientFilter): PatientList
   patientByEmail(email: String!): Patient
+  patientDetails(id: ID!): Patient
 }
 
 type Mutation {
