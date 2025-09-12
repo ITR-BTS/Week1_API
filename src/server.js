@@ -16,8 +16,8 @@ async function startServer() {
   await server.start()
   server.applyMiddleware({ app })
 
-  app.listen(8080, () => {
-    console.log(`Server running at localhost:8080${server.graphqlPath}`)
+  app.listen(PORT, () => {
+    console.log(`Server running at localhost ${PORT}:${server.graphqlPath}`)
   })
 }
 
