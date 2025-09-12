@@ -1,4 +1,4 @@
-import cors from 'cors'
+// import cors from 'cors'
 import 'dotenv/config'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
@@ -22,11 +22,3 @@ async function startServer() {
 }
 
 startServer()
-// app.use(
-//   cors(
-//     {
-//       origin: process.env.FRONTEND_URL || 'http://localhost:5173'
-//     }
-//   )
-// )
-
