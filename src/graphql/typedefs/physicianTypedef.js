@@ -1,8 +1,7 @@
-import { gql } from 'apollo-server-express'
+import { gql } from "apollo-server-express";
 
 const physicianTypeDef = gql`
-
-  type Physician{
+  type Physician {
     id: ID!
     email: String!
     title: String!
@@ -10,16 +9,21 @@ const physicianTypeDef = gql`
     gender: String!
     dob: String!
   }
-  
+
   type Query {
-  physicians: [Physician]
-  physician(id: ID!): Physician
-}
+    physicians: [Physician]
+    physician(id: ID!): Physician
+  }
 
-type Mutation {
-  createPhysician(email: String!, title: String!, phone: String!, gender: String!, dob: String!): Physician
-}
+  type Mutation {
+    createPhysician(
+      email: String!
+      title: String!
+      phone: String!
+      gender: String!
+      dob: String!
+    ): Physician
+  }
+`;
 
-`
-
-export default physicianTypeDef
+export default physicianTypeDef;

@@ -1,9 +1,9 @@
 // import cors from 'cors'
 import 'dotenv/config'
 import express from 'express'
-import { ApolloServer } from 'apollo-server-express'
-
 import connectDB from './config/mongodb.js'
+
+import { ApolloServer } from 'apollo-server-express'
 import { typeDefs, resolvers } from './graphql/index.js';
 
 const app = express()
