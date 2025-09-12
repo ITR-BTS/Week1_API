@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express'
+import { gql } from "apollo-server-express";
 
 const patientTypeDef = gql`
 
@@ -33,11 +33,6 @@ const patientTypeDef = gql`
     patientByEmail(email: String!): [Patient]
     patientDetails(id: ID!): Patient
   }
-  patients(page: Int, limit: Int, filter: PatientFilter): PatientList
-  countPatients: Int!
-  patientByEmail(email: String!): Patient
-  patientDetails(id: ID!): Patient
-}
 
   type Mutation {
     createPatient(email: String!, phone: String!, gender: String!, dob: String!, physician: ID!, addressInfo: AddressInput!): Patient
@@ -65,6 +60,6 @@ const patientTypeDef = gql`
     state: String!
     country: String!
   }
-`
+`;
 
-export default patientTypeDef
+export default patientTypeDef;
