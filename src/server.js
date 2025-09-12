@@ -11,6 +11,7 @@ import physicianTypeDef from './graphql/typedefs/physicianTypedef.js'
 import patientTypeDef from './graphql/typedefs/patientTypedef.js'
 
 const app = express()
+const PORT = process.env.PORT || 8080 
 const resolvers = mergeResolvers([
   patientResolvers,
   physicianResolvers
@@ -29,17 +30,11 @@ async function startServer() {
   await server.start()
   server.applyMiddleware({ app })
 
-  app.listen(8080, () => {
-    console.log(`Server running at localhost:8080${server.graphqlPath}`)
+  app.listen(PORT, () => {
+    console.log(`Server running at localhost ${PORT}:${server.graphqlPath}`)
   })
 }
 
 startServer()
-// app.use(
-//   cors(
-//     {
-//       origin: process.env.FRONTEND_URL || 'http://localhost:5173'
-//     }
-//   )
-// )
+
 
