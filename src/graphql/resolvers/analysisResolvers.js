@@ -1,6 +1,6 @@
 import Patient from "../../models/patientModel.js";
 
-const listAge = ["0-10", "11-20", "21-30", "31-40", "41-50"];
+const listAge = ["0-10", "11-20", "21-35", "36-50", ">50"];
 
 const analysisResolvers = {
   Query: {
@@ -62,6 +62,14 @@ const analysisResolvers = {
 
           // Gán tuổi vào nhóm
           for (const range of listAge) {
+            if (range.startsWith(">")) {
+              const threshold = Number(range.slice(1));
+              if (Number.isFinite(threshold) && age > threshold) {
+                ageDistribution[range]++;
+              }
+              continue; 
+            }
+
             const [min, max] = range.split("-").map(Number);
             if (age >= min && age <= max) {
               ageDistribution[range]++;
