@@ -68,6 +68,9 @@ const patientResolvers = {
         throw new Error(`Failed: ${err.message}`)
       }
     },
+    countPatients: async (_, {}) => {
+      return Patient.countDocuments();
+    },
     patientByEmail: async (_, { email }) => {
       return Patient.find({
         email: { $regex: email, $options: 'i' }

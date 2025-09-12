@@ -29,9 +29,15 @@ const patientTypeDef = gql`
 
   type Query {
     patients(page: Int, limit: Int, action: PatientQueryAction): PatientList
+    countPatients: Int!
     patientByEmail(email: String!): [Patient]
     patientDetails(id: ID!): Patient
   }
+  patients(page: Int, limit: Int, filter: PatientFilter): PatientList
+  countPatients: Int!
+  patientByEmail(email: String!): Patient
+  patientDetails(id: ID!): Patient
+}
 
   type Mutation {
     createPatient(email: String!, phone: String!, gender: String!, dob: String!, physician: ID!, addressInfo: AddressInput!): Patient
