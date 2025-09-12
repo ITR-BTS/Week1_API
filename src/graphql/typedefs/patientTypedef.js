@@ -50,6 +50,7 @@ const patientTypeDef = gql`
     gender: String
     sortEmail: String
     sortPhyEmail: String
+    search: String
   }
 
   input UpdatePatientInput {
@@ -69,3 +70,4 @@ const patientTypeDef = gql`
 `;
 
 export default patientTypeDef;
+ 
