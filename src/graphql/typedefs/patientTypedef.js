@@ -8,16 +8,16 @@ const patientTypeDef = gql`
     country: String!
   }
 
-  type Patient{
-      id: ID!
-      email: String!
-      phone: String!
-      gender: String!
-      dob: String!
-      physician: Physician!
-      addressInfo: AddressInfo!
+  type Patient {
+    id: ID!
+    email: String!
+    phone: String!
+    gender: String!
+    dob: String!
+    physician: Physician!
+    addressInfo: AddressInfo!
   }
-  type Physician{
+  type Physician {
     id: ID!
     email: String!
     title: String!
@@ -34,14 +34,7 @@ const patientTypeDef = gql`
     totalPages: Int
   }
 
-  }
-
   type Query {
-    patients(page: Int, limit: Int, action: PatientQueryAction): PatientList
-    countPatients: Int!
-    patientByEmail(email: String!): [Patient]
-    patientDetails(id: ID!): Patient
-  }
     patients(page: Int, limit: Int, action: PatientQueryAction): PatientList
     countPatients: Int!
     patientByEmail(email: String!): [Patient]
@@ -83,6 +76,6 @@ const patientTypeDef = gql`
     state: String!
     country: String!
   }
-`
+`;
 
-export default patientTypeDef
+export default patientTypeDef;

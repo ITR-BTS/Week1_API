@@ -1,8 +1,7 @@
 import Patient from "../../models/patientModel.js";
 import Physician from "../../models/physicianModel.js";
 
-const escapeRegex = (s = "") =>
-  s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const escapeRegex = (s = "") => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const patientResolvers = {
   Query: {

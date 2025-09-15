@@ -1,7 +1,5 @@
 import Patient from "../../models/patientModel.js";
 
-const listAge = ["0-10", "11-20", "21-35", "36-50", ">50"];
-
 const analysisResolvers = {
   Query: {
     percentGender: async () => {
@@ -17,6 +15,8 @@ const analysisResolvers = {
 
         // Tính tổng
         const total = result.reduce((sum, item) => sum + item.count, 0);
+
+        if (total === 0) return { male: 0, female: 0, other: 0 };
 
         // Mặc định 0
         let male = 0,
@@ -39,6 +39,8 @@ const analysisResolvers = {
 
     distributeAge: async () => {
       try {
+        const listAge = ["0-10", "11-20", "21-35", "36-50", ">50"];
+
         const patients = await Patient.find({}, { dob: 1 }); // chỉ lấy dob
 
         // Khởi tạo count map
@@ -67,7 +69,7 @@ const analysisResolvers = {
               if (Number.isFinite(threshold) && age > threshold) {
                 ageDistribution[range]++;
               }
-              continue; 
+              continue;
             }
 
             const [min, max] = range.split("-").map(Number);
