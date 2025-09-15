@@ -52,34 +52,45 @@ const patientResolvers = {
             },
             { $skip: skip },
             { $limit: limit },
+            {
+              $project: {
+                email: 1,
+                phone: 1,
+                gender: 1,
+                dob: 1,
+                addressInfo: 1,
+                physician: "$physician._id", // 👈 giữ ID để DataLoader xử lý
+              },
+            },
           ];
 
           patients = await Patient.aggregate(pipeline);
           total = await Patient.countDocuments(query);
 
           // chuyển _id -> id cho GraphQL
-          patients = patients.map((p) => ({
-            ...p,
-            id: p._id.toString(),
-            physician: p.physician
-              ? { ...p.physician, id: p.physician._id.toString() }
-              : null,
-          }));
+          // patients = patients.map((p) => ({
+          //   ...p,
+          //   id: p._id.toString(),
+          //   physician: p.physician
+          //     ? { ...p.physician, id: p.physician._id.toString() }
+          //     : null,
+          // }));
         } else {
           patients = await Patient.find(query)
-            .populate("physician")
+            // .populate("physician")
             .sort(sort)
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .lean(); // trả về plain JS object, không phải Mongoose document (nhẹ hơn, nhanh hơn)
 
           total = await Patient.countDocuments(query);
         }
 
         return {
-          data: patients,
+          data: patients.map((d) => ({ id: String(d._id), ...d })),
           pageSize: limit,
-          total,
           page,
+          total,
           totalPages: Math.ceil(total / limit),
         };
       } catch (err) {
@@ -90,16 +101,32 @@ const patientResolvers = {
       return Patient.countDocuments();
     },
     patientByEmail: async (_, { email }) => {
-      return Patient.find({
+      const patient = await Patient.find({
         email: { $regex: email, $options: "i" },
-      }).populate("physician");
+      })
+        // .populate("physician")
+        .lean();
+
+      return patient.map((p) => ({ id: String(p._id), ...p }));
     },
     patientDetails: async (_, { id }) => {
-      const patient = await Patient.findById(id).populate("physician");
+      const patient = await Patient.findById(id)
+        // .populate("physician");
+        .lean();
       if (!patient) throw new Error("Patient not found");
-      return patient;
+      return { id: String(patient._id), ...patient };
     },
   },
+
+  Patient: {
+    // Điều hướng many-to-one: mỗi patient cần 1 physician
+    physician: (parent, _, { loaders }) => {
+      // parent.physician là ObjectId/ID
+      return loaders.physician.load(parent.physician);
+    },
+    id: (p) => (p.id ?? p._id)?.toString(),
+  },
+
   Mutation: {
     createPatient: async (
       _,
@@ -116,12 +143,13 @@ const patientResolvers = {
         addressInfo,
       });
       await patient.save();
-      return patient.populate("physician");
+
+      return patient;
     },
     updatePatient: async (_, { id, input }) => {
       const patient = await Patient.findByIdAndUpdate(id, input, {
         new: true,
-      }).populate("physician");
+      });
       if (!patient) throw new Error("Patient not found");
       return patient;
     },

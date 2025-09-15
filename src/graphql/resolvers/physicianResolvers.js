@@ -5,7 +5,7 @@ const physicianResolvers = {
     physicians: async () => await physicianModel.find(),
     physician: async (_, { id }) => await physicianModel.findById(id),
   },
-  
+
   Mutation: {
     createPhysician: async (_, { email, title, phone, gender, dob }) => {
       const newPhysician = await physicianModel.create({
@@ -17,6 +17,10 @@ const physicianResolvers = {
       });
       return newPhysician;
     },
+  },
+
+  Physician: {
+    id: (doc) => (doc?.id ?? doc?._id)?.toString(),
   },
 };
 
