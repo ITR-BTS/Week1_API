@@ -1,0 +1,4 @@
+type Query {
+  percentGender: PercentGenderType!
+  distributeAge: [DistributeAgeType]!
+}

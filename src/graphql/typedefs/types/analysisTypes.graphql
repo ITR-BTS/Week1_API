@@ -1,0 +1,10 @@
+type PercentGenderType {
+  male: Int!
+  female: Int!
+  other: Int
+}
+
+type DistributeAgeType {
+  ageType: String!
+  value: Int!
+}
