@@ -104,17 +104,12 @@ const patientResolvers = {
   Mutation: {
     createPatient: async (
       _,
-      { email, phone, gender, dob, physician, addressInfo }
+      { input }
     ) => {
-      const physicianExists = await Physician.findById(physician);
+      const physicianExists = await Physician.findById(input.physician);
       if (!physicianExists) throw new Error("Physician not found");
       const patient = new Patient({
-        email,
-        phone,
-        gender,
-        dob,
-        physician,
-        addressInfo,
+        ...input
       });
       await patient.save();
       return patient.populate("physician");
@@ -122,7 +117,7 @@ const patientResolvers = {
     updatePatient: async (_, { id, input }) => {
       const patient = await Patient.findByIdAndUpdate(id, input, {
         new: true,
-      }).populate("physician");
+      }).populate("physician"); 
       if (!patient) throw new Error("Patient not found");
       return patient;
     },

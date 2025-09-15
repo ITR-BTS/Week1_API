@@ -35,12 +35,7 @@ const patientTypeDef = gql`
 
   type Mutation {
     createPatient(
-      email: String!
-      phone: String!
-      gender: String!
-      dob: String!
-      physician: ID!
-      addressInfo: AddressInput!
+      input: CreatePatientInput!
     ): Patient
     updatePatient(id: ID!, input: UpdatePatientInput!): Patient
     deletePatient(id: ID!): Boolean
@@ -56,6 +51,16 @@ const patientTypeDef = gql`
   input UpdatePatientInput {
     email: String
     phone: String
+    dob: String
+    gender: String
+    physician: ID
+    addressInfo: AddressInput
+  }
+
+  input CreatePatientInput{
+    email: String
+    phone: String
+    gender: String
     dob: String
     physician: ID
     addressInfo: AddressInput
