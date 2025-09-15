@@ -1,0 +1,22 @@
+input PatientQueryAction {
+  gender: String
+  sortEmail: String
+  sortPhyEmail: String
+  search: String
+}
+
+input UpdatePatientInput {
+  email: String
+  phone: String
+  dob: String
+  gender: String
+  physician: ID
+  addressInfo: AddressInput
+}
+
+input AddressInput {
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+}

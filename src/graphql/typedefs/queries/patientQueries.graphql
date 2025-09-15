@@ -1,0 +1,6 @@
+type Query {
+  patients(page: Int, limit: Int, action: PatientQueryAction): PatientList
+  countPatients: Int!
+  patientByEmail(email: String!): [Patient]
+  patientDetails(id: ID!): Patient
+}

@@ -1,11 +1,7 @@
 import { mergeTypeDefs } from "@graphql-tools/merge";
-import patientTypedef from "./patientTypedef.js";
-import physicianTypedef from "./physicianTypedef.js";
-import analysisTypeDef from "./analysisTypedef.js";
+import { loadFilesSync } from "@graphql-tools/load-files";
 
-const typeDefs = mergeTypeDefs([
-  patientTypedef,
-  physicianTypedef,
-  analysisTypeDef,
-]);
+const typesArray = loadFilesSync("./**/*.graphql");
+const typeDefs = mergeTypeDefs(typesArray);
+
 export default typeDefs;

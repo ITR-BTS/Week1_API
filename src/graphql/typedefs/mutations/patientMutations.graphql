@@ -1,0 +1,14 @@
+type Mutation {
+  createPatient(
+    email: String!
+    phone: String!
+    gender: String!
+    dob: String!
+    physician: ID!
+    addressInfo: AddressInput!
+  ): Patient
+
+  updatePatient(id: ID!, input: UpdatePatientInput!): Patient
+
+  deletePatient(id: ID!): Boolean
+}

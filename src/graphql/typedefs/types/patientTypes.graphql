@@ -1,0 +1,33 @@
+type AddressInfo {
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+}
+
+type Patient {
+  id: ID!
+  email: String!
+  phone: String!
+  gender: String!
+  dob: String!
+  physician: Physician!
+  addressInfo: AddressInfo!
+}
+
+type Physician {
+  id: ID!
+  email: String!
+  title: String!
+  phone: String!
+  gender: String!
+  dob: String!
+}
+
+type PatientList {
+  data: [Patient]
+  pageSize: Int
+  total: Int
+  page: Int
+  totalPages: Int
+}
