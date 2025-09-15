@@ -1,0 +1,9 @@
+type Mutation {
+  createPhysician(
+    email: String!
+    title: String!
+    phone: String!
+    gender: String!
+    dob: String!
+  ): Physician
+}
