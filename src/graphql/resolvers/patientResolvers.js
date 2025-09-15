@@ -102,10 +102,7 @@ const patientResolvers = {
     },
   },
   Mutation: {
-    createPatient: async (
-      _,
-      { input }
-    ) => {
+    createPatient: async (_, { input }) => {
       const physicianExists = await Physician.findById(input.physician);
       if (!physicianExists) throw new Error("Physician not found");
       const patient = new Patient({
