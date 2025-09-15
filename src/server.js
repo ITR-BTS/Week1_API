@@ -24,6 +24,7 @@ async function startServer() {
 
   await server.start();
   server.applyMiddleware({ app });
+  
 
   app.listen(process.env.APP_PORT, () => {
     console.log(
