@@ -59,22 +59,13 @@ const patientResolvers = {
                 gender: 1,
                 dob: 1,
                 addressInfo: 1,
-                physician: "$physician._id", // 👈 giữ ID để DataLoader xử lý
+                physician: "$physician._id", // giữ ID để DataLoader xử lý
               },
             },
           ];
 
           patients = await Patient.aggregate(pipeline);
           total = await Patient.countDocuments(query);
-
-          // chuyển _id -> id cho GraphQL
-          // patients = patients.map((p) => ({
-          //   ...p,
-          //   id: p._id.toString(),
-          //   physician: p.physician
-          //     ? { ...p.physician, id: p.physician._id.toString() }
-          //     : null,
-          // }));
         } else {
           patients = await Patient.find(query)
             // .populate("physician")
@@ -87,7 +78,7 @@ const patientResolvers = {
         }
 
         return {
-          data: patients.map((d) => ({ id: String(d._id), ...d })),
+          data: patients,
           pageSize: limit,
           page,
           total,
@@ -107,14 +98,14 @@ const patientResolvers = {
         // .populate("physician")
         .lean();
 
-      return patient.map((p) => ({ id: String(p._id), ...p }));
+      return patient;
     },
     patientDetails: async (_, { id }) => {
       const patient = await Patient.findById(id)
         // .populate("physician");
         .lean();
       if (!patient) throw new Error("Patient not found");
-      return { id: String(patient._id), ...patient };
+      return patient;
     },
   },
 
